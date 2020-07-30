@@ -52,7 +52,7 @@ public class CatControllerTest {
         ResponseEntity<Cat> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/api/cat/2", Cat.class);
         assertNotNull(responseEntity);
         Cat cat = responseEntity.getBody();
-        assertEquals("First Cat", cat.getName());
+        assertEquals("Third Cat", cat.getName());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class CatControllerTest {
         ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/api/cat/100", String.class);
         assertNotNull(responseEntity);
         String body = responseEntity.getBody();
-        assertEquals("Cannot return a cat with index 100 because cat list size = 3", body);
+        assertEquals("Cannot return a cat with index 100 because cat list size = 4", body);
     }
 
     @Test
