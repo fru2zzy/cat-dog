@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/cat")
 public class CatController {
@@ -25,7 +27,7 @@ public class CatController {
         catList.add(new Cat(3, "Third Cat"));
     }
 
-    @GetMapping
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public List<Cat> getCat() {
         return catList;
     }
@@ -36,7 +38,7 @@ public class CatController {
         return cat;
     }
 
-    @GetMapping("/{ids}")
+    @GetMapping(value = "/{ids}", produces = APPLICATION_JSON_VALUE)
     public Cat getCatById(@PathVariable(name = "ids") int id) throws CatNotFoundException {
         int catListSize = catList.size();
         if (catListSize > id) {

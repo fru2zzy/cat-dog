@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/dog")
 public class DogController {
@@ -23,7 +25,7 @@ public class DogController {
         dogList.add(new Dog(2, "Second Dog"));
         dogList.add(new Dog(3, "Third Dog"));
     }
-    @GetMapping
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public List<Dog> getDog() {
         return dogList;
     }
@@ -34,7 +36,7 @@ public class DogController {
         return dog;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public Dog getDogById(@PathVariable int id) throws DogNotFoundException {
         int dogListSize = dogList.size();
         if (dogList.size() > id) {
