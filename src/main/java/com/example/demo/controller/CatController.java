@@ -32,7 +32,7 @@ public class CatController {
         return catList;
     }
 
-    @PostMapping
+    @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public Cat postCat(@Valid @RequestBody Cat cat) {
         catList.add(cat);
         return cat;

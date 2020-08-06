@@ -30,7 +30,7 @@ public class DogController {
         return dogList;
     }
 
-    @PostMapping
+    @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public Dog postDog(@RequestBody Dog dog) {
         dogList.add(dog);
         return dog;
