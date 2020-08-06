@@ -40,7 +40,7 @@ public class CatControllerTest {
 
     @Test
     void getCat() {
-        ResponseEntity<Cat[]> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/api/cat", Cat[].class);
+        ResponseEntity<Cat[]> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/cat", Cat[].class);
         assertNotNull(responseEntity);
         Cat[] cats = responseEntity.getBody();
         assertNotNull(cats);
@@ -49,7 +49,7 @@ public class CatControllerTest {
 
     @Test
     void getCatById() {
-        ResponseEntity<Cat> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/api/cat/2", Cat.class);
+        ResponseEntity<Cat> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/cat/2", Cat.class);
         assertNotNull(responseEntity);
         Cat cat = responseEntity.getBody();
         assertEquals("Third Cat", cat.getName());
@@ -57,7 +57,7 @@ public class CatControllerTest {
 
     @Test
     void getCatById404() {
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/api/cat/100", String.class);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/cat/100", String.class);
         assertNotNull(responseEntity);
         String body = responseEntity.getBody();
         assertEquals("Cannot return a cat with index 100 because cat list size = 4", body);
@@ -81,7 +81,7 @@ public class CatControllerTest {
         String body = mapper.writeValueAsString(errors);
         String catString = mapper.writeValueAsString(cat);
         HttpEntity<String> httpEntity = new HttpEntity<>(catString, headers);
-        ResponseEntity<Object> responseEntity = this.restTemplate.postForEntity("http://localhost:" + port + "/api/cat", httpEntity, Object.class);
+        ResponseEntity<Object> responseEntity = this.restTemplate.postForEntity("http://localhost:" + port + "/cat", httpEntity, Object.class);
         //assertEquals(s, responseEntity.getBody());
         assertEquals(responseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
     }
@@ -94,7 +94,7 @@ public class CatControllerTest {
         String body = mapper.writeValueAsString(cat);
         HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<Cat> responseEntity = this.restTemplate.postForEntity("http://localhost:" + port + "/api/cat", httpEntity, Cat.class);
+        ResponseEntity<Cat> responseEntity = this.restTemplate.postForEntity("http://localhost:" + port + "/cat", httpEntity, Cat.class);
         assertEquals(cat, responseEntity.getBody());
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }

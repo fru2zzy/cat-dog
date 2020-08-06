@@ -34,7 +34,7 @@ public class DogControllerTest {
 
     @Test
     void getDog() {
-        ResponseEntity<Dog[]> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/api/dog", Dog[].class);
+        ResponseEntity<Dog[]> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/dog", Dog[].class);
         assertNotNull(responseEntity);
         Dog[] dogs = responseEntity.getBody();
         assertNotNull(dogs);
@@ -43,7 +43,7 @@ public class DogControllerTest {
 
     @Test
     void getDogById() {
-        ResponseEntity<Dog> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/api/dog/0", Dog.class);
+        ResponseEntity<Dog> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/dog/0", Dog.class);
         assertNotNull(responseEntity);
         Dog dog = responseEntity.getBody();
         assertEquals("First Dog", dog.getName());
@@ -51,7 +51,7 @@ public class DogControllerTest {
 
     @Test
     void getDogById404() {
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/api/dog/100", String.class);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/dog/100", String.class);
         assertNotNull(responseEntity);
         String body = responseEntity.getBody();
         assertEquals("Cannot return a dog with index 100 because dog list size = 3", body);
@@ -65,7 +65,7 @@ public class DogControllerTest {
         String body = mapper.writeValueAsString(dog);
         HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<Dog> responseEntity = this.restTemplate.postForEntity("http://localhost:" + port + "/api/dog", httpEntity, Dog.class);
+        ResponseEntity<Dog> responseEntity = this.restTemplate.postForEntity("http://localhost:" + port + "/dog", httpEntity, Dog.class);
         assertEquals(dog, responseEntity.getBody());
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/cat")
+@RequestMapping("/cat")
 public class CatController {
     List<Cat> catList = new ArrayList<>();
 

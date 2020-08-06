@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/dog")
+@RequestMapping("/dog")
 public class DogController {
     List<Dog> dogList = new ArrayList<>();
 
