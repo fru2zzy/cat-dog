@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import com.example.demo.exception.CatNotFoundException;
 import com.example.demo.model.Cat;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,12 +41,19 @@ public class CatController {
     }
 
     @GetMapping(value = "/{ids}", produces = APPLICATION_JSON_VALUE)
-    public Cat getCatById(@PathVariable(name = "ids") int id) throws CatNotFoundException {
+    @HystrixCommand(fallbackMethod = "fallbackGetCatById", commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000")})
+    public Cat getCatById(@PathVariable(name = "ids") int id) throws CatNotFoundException, InterruptedException {
         int catListSize = catList.size();
         if (catListSize > id) {
+            Thread.sleep(2000);
             return catList.get(id);
         } else {
             throw new CatNotFoundException("Cannot return a cat with index " + id + " because cat list size = " + catListSize);
         }
+    }
+
+    public Cat fallbackGetCatById(int id) {
+        return new Cat(id, "empty cat");
     }
 }
